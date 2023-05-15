@@ -4,7 +4,7 @@ import com.fmmobile.upcomingmovieskmm.network.model.GenreList
 import com.fmmobile.upcomingmovieskmm.network.model.MovieList
 import io.ktor.serialization.JsonConvertException
 
-// TODO: This will be parsed to clean architeture (data-domain) futter
+// TODO: This will be parsed to clean architecture (data-domain) further
 class GetMovieListUseCase {
     var genres: GenreList? = null
     var movies: MovieList? = null

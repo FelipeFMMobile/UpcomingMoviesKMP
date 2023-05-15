@@ -18,8 +18,18 @@ struct ListMoviesUIView: View {
             VStack {
                 List(viewModel.movies, id: \.id) { movie in
                     NavigationLink {
-                        Text(movie.overview)
-                            .padding(24.0)
+                        VStack(alignment: .leading, spacing: 8.0) {
+                            if let url = URL(string: Api.imagedomain.domain + movie.posterPath) {
+                                ImageLoaderView(url: url)
+                                                .frame(height: 150)
+                            }
+                            Text(movie.title)
+                             .font(.title)
+                            Text(movie.releaseDate)
+                             .font(.caption)
+                            Text(movie.overview)
+                        }
+                        .padding(24.0)
                     } label: {
                         let rowModel = MovieRowUIViewModel(movie: movie)
                         MovieRowUI(rowModel: rowModel)

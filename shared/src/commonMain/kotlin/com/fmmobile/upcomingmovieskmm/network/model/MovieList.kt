@@ -27,7 +27,7 @@ data class Movie (
     val adult: Boolean,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
     @SerialName( "genre_ids")
     val genreIDS: List<Long>,
