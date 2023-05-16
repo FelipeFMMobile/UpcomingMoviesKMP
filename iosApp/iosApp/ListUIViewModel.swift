@@ -29,7 +29,9 @@ class ListUIViewModel: ObservableObject {
         return try await withCheckedThrowingContinuation { (continuation: ApiContinuation) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+
                 GetMovieListUseCase().loadMovies(page: Int32(self.currentPage)) { moviesList, error in
+
                     if let error = error {
                         debugPrint("ERROR: \(error.localizedDescription)")
                         continuation.resume(throwing: error)
