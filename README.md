@@ -1,7 +1,10 @@
 # UpcomingMovies Kotlin Multiplatform POC
 
 This is a proof-of-concept project that demonstrates the use of Kotlin Multiplatform (KMP) in a mobile app project. 
-The focus of this project is to show how KMP can be used to share code between Android and iOS platforms in a simple app that displays upcoming movies.
+The focus of this project is to show how KMP can be used to share code between Android and iOS platforms in a simple app that displays upcoming movies. 
+
+The goal is simple: is to have contact with the technology and explore a simple list of movies display in screen with a infinite scroll. Based on this project: 
+https://github.com/FelipeFMMobile/UpcomingMovies
 
 ## Technologies Used
 
@@ -12,6 +15,7 @@ The technologies used in this project include:
 - **SwiftUI:** A declarative user interface framework for building apps in iOS.
 - **Xcode:** An integrated development environment (IDE) for building iOS apps.
 - **Android Studio:** An IDE for building Android apps.
+- **JetPack Compose** An framework to build UI for Android applications.
 
 ## What is Kotlin Multiplatform (KMP)?
 
