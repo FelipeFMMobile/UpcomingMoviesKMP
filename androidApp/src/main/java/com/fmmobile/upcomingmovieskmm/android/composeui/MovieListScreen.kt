@@ -1,6 +1,5 @@
 package com.fmmobile.upcomingmovieskmm.android.composeui
 
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,11 +20,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,23 +35,24 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
-import com.fmmobile.upcomingmovieskmm.android.NavActions
-import com.fmmobile.upcomingmovieskmm.android.NavGraph
-import com.fmmobile.upcomingmovieskmm.network.Api
-import com.fmmobile.upcomingmovieskmm.network.GetMovieListUseCase
-import com.fmmobile.upcomingmovieskmm.network.model.Movie
+import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
+import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
+import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
+import com.fmmobile.upcomingmovieskmm.domain.model.Movie
+import org.koin.java.KoinJavaComponent.get
 
 
 @Composable
-fun MovieListMain(navController: NavHostController) {
+fun MovieListMain(navController: NavHostController,
+                  useCase: GetMovieListUseCase = AndroidModule().getMovieListUseCase
+    ) {
     var pageCount = 1
     var movies = remember { mutableStateListOf<Movie>() }
     var isLoading = remember { mutableStateOf(false)}
     LaunchedEffect(true) {
         try {
             movies.addAll(
-                GetMovieListUseCase()
-                .loadMovies(pageCount).results)
+                useCase.loadMovies(pageCount).results)
         } catch (e: Exception) {
             e.localizedMessage ?: "error"
         }
@@ -68,8 +66,7 @@ fun MovieListMain(navController: NavHostController) {
         isLoading.value = true
         try {
             movies.addAll(
-                GetMovieListUseCase()
-                    .loadMovies(pageCount).results
+                useCase.loadMovies(pageCount).results
             )
             isLoading.value = false
         } catch (e: Exception) {
@@ -102,7 +99,7 @@ fun MovieListScreen(
             Row(
                 modifier = Modifier.padding(16.dp)
                      .clickable {
-                        val info = MovieInfo(movie.title, movie.posterPath, movie.overview)
+                        val info = MovieInfo(movie.title, movie.posterPath ?: "", movie.overview)
                          navController.currentBackStackEntry
                              ?.arguments?.putParcelable("obj", info)
                         navController.navigate("movieDetail/${info.toUriString()}")

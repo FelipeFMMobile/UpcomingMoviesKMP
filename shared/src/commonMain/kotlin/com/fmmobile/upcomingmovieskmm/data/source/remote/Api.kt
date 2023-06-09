@@ -1,4 +1,4 @@
-package com.fmmobile.upcomingmovieskmm.network
+package com.fmmobile.upcomingmovieskmm.data.source.remote
 
 enum class EndPoint(val path: String) {
     genre("/3/genre/movie/list"),

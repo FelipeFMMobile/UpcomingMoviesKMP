@@ -1,7 +1,5 @@
-package com.fmmobile.upcomingmovieskmm.network
+package com.fmmobile.upcomingmovieskmm.data.source.remote
 
-import com.fmmobile.upcomingmovieskmm.network.model.GenreList
-import com.fmmobile.upcomingmovieskmm.network.model.MovieList
 import io.ktor.client.*
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.*
@@ -13,9 +11,8 @@ import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-// TODO: Convert to Repository futter (data-domain)
-class Service {
-    private val httpClient = HttpClient {
+class NetworkServices {
+    public val httpClient = HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
@@ -25,17 +22,7 @@ class Service {
         }
     }
 
-    suspend fun getGenres(): GenreList {
-        return httpClient.get(make(EndPoint.genre)).body()
-    }
-
-    suspend fun getMovies(page: Int): MovieList {
-        val params = mapOf("page" to page.toString())
-        return httpClient.get(make(EndPoint.upcoming, params)).body()
-    }
-
-
-    private fun make(endpoint: EndPoint, params: Map<String, String>? = null) : Url {
+    public fun make(endpoint: EndPoint, params: Map<String, String>? = null) : Url {
         val builder = URLBuilder().apply {
             protocol = URLProtocol.HTTPS
             host = Api.prod.domain
@@ -48,5 +35,10 @@ class Service {
             }
         }
         return builder.build()
+    }
+
+    public suspend inline fun <reified T> run(endpoint: EndPoint,
+                                              params: Map<String, String>? = null) : T {
+        return httpClient.get(make(endpoint, params)).body()
     }
 }

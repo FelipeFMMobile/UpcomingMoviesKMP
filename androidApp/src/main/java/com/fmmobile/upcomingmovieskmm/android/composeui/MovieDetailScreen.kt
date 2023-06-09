@@ -2,19 +2,16 @@ package com.fmmobile.upcomingmovieskmm.android.composeui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.fmmobile.upcomingmovieskmm.network.Api
-import com.fmmobile.upcomingmovieskmm.network.model.Movie
+import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
 
 @Composable
 fun MovieDetailScreen(info: MovieInfo) {

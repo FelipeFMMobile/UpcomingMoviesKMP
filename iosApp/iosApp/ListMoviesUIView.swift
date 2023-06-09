@@ -19,7 +19,7 @@ struct ListMoviesUIView: View {
                 List(viewModel.movies, id: \.id) { movie in
                     NavigationLink {
                         VStack(alignment: .leading, spacing: 8.0) {
-                            if let url = URL(string: Api.imagedomain.domain + movie.posterPath) {
+                            if let url = URL(string: Api.imagedomain.domain + (movie.posterPath ?? "")) {
                                 ImageLoaderView(url: url)
                                                 .frame(height: 150)
                             }

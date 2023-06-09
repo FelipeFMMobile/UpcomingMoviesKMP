@@ -1,13 +1,13 @@
-package com.fmmobile.upcomingmovieskmm.network.model
+package com.fmmobile.upcomingmovieskmm.data.source.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieList (
-    val dates: Dates,
+data class MovieListResponse (
+    val dates: DatesResponse,
     val page: Long,
-    val results: List<Movie>,
+    val results: List<MovieResponse>,
 
     @SerialName("total_pages")
     val totalPages: Long,
@@ -17,13 +17,13 @@ data class MovieList (
 )
 
 @Serializable
-data class Dates (
+data class DatesResponse (
     val maximum: String,
     val minimum: String
 )
 
 @Serializable
-data class Movie (
+data class MovieResponse (
     val adult: Boolean,
 
     @SerialName("backdrop_path")
@@ -44,7 +44,7 @@ data class Movie (
     val popularity: Double,
 
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @SerialName("release_date")
     val releaseDate: String,
