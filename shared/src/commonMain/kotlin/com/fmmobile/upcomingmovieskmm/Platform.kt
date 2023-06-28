@@ -1,6 +1,7 @@
 package com.fmmobile.upcomingmovieskmm
 
 import com.fmmobile.upcomingmovieskmm.di.appModule
+import com.fmmobile.upcomingmovieskmm.di.realmModule
 import com.fmmobile.upcomingmovieskmm.di.remoteModule
 
 interface Platform {
@@ -10,4 +11,4 @@ interface Platform {
 expect fun getPlatform(): Platform
 
 // start a KoinApplication in Global context
-fun appModule() = listOf(appModule, remoteModule)
+fun appModule() = listOf(appModule, remoteModule, realmModule)

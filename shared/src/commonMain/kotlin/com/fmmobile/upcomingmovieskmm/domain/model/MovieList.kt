@@ -1,37 +1,10 @@
 package com.fmmobile.upcomingmovieskmm.domain.model
 
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IDatesModel
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IMovieListModel
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IMovieModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-interface IMovieListModel {
-    val dates: IDatesModel
-    val page: Long
-    val results: List<IMovieModel>
-    val totalPages: Long
-    val totalResults: Long
-}
-
-interface IDatesModel {
-    val maximum: String
-    val minimum: String
-}
-
-interface IMovieModel {
-    val adult: Boolean
-    val backdropPath: String?
-    val genreIDS: List<Long>
-    val id: Long
-    val originalLanguage: String
-    val originalTitle: String
-    val overview: String
-    val popularity: Double
-    val posterPath: String?
-    val releaseDate: String
-    val title: String
-    val video: Boolean
-    val voteAverage: Double
-    val voteCount: Long
-}
 
 @Serializable
 data class MovieList (
@@ -88,3 +61,4 @@ data class Movie (
     @SerialName("vote_count")
     override val voteCount: Long
 ): IMovieModel
+

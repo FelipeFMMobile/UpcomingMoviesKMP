@@ -1,15 +1,8 @@
 package com.fmmobile.upcomingmovieskmm.domain.model
 
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreListModel
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreModel
 import kotlinx.serialization.Serializable
-
-interface IGenreListModel {
-    val genres: List<IGenreModel>
-}
-
-interface IGenreModel {
-    val id: Long
-    val name: String
-}
 
 @Serializable
 data class GenreList(

@@ -7,7 +7,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.8.21"
-    id("io.realm.kotlin") version "1.8.0"
+    id("io.realm.kotlin") version "1.9.0"
 }
 
 kotlin {

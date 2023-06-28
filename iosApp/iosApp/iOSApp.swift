@@ -10,7 +10,13 @@ struct iOSApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-            ListMoviesUIView()
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    ListMoviesSwiftUIView()
+                }
+            } else {
+                ListMoviesSwiftUIView()
+            }
 		}
 	}
 }

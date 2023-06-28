@@ -2,6 +2,9 @@ package com.fmmobile.upcomingmovieskmm.data.source.remote
 
 import io.ktor.client.*
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.get
 import io.ktor.http.URLBuilder
@@ -9,6 +12,8 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.Url
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.utils.io.errors.IOException
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 class NetworkServices {
@@ -20,6 +25,17 @@ class NetworkServices {
                 ignoreUnknownKeys = true
             })
         }
+        this.expectSuccess = true
+//        HttpResponseValidator {
+//            validateResponse { response ->
+//                val error: Error = response.body()
+//                throw ServerResponseException(response, "")
+////                if (error.code != 0) {
+////                    throw CustomResponseException(response,
+////                        "Code: ${error.code}, message: ${error.message}")
+////                }
+//            }
+//        }
     }
 
     public fun make(endpoint: EndPoint, params: Map<String, String>? = null) : Url {
@@ -37,8 +53,19 @@ class NetworkServices {
         return builder.build()
     }
 
-    public suspend inline fun <reified T> run(endpoint: EndPoint,
-                                              params: Map<String, String>? = null) : T {
-        return httpClient.get(make(endpoint, params)).body()
+    public suspend inline fun <reified T>
+            run(endpoint: EndPoint, params: Map<String, String>? = null) : Result<T> {
+        return try {
+            val response = httpClient.get(make(endpoint, params))
+            Result.success(response.body())
+        } catch (e: ClientRequestException) {
+            Result.failure(e)
+        } catch (e: ServerResponseException) {
+            Result.failure(e)
+        } catch (e: IOException) {
+            Result.failure(e)
+        } catch (e: SerializationException) {
+            Result.failure(e)
+        }
     }
 }

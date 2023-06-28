@@ -15,7 +15,7 @@ struct ImageLoaderView: View {
             image.resizable()
         } placeholder: {
             ProgressView()
-        }.frame(width: 100, height: 150)
+        }
     }
 }
 
@@ -25,6 +25,6 @@ struct ImageLoaderView_Previews: PreviewProvider {
             ImageLoaderView(url:
                                 URL(string: "https://image.tmdb.org/t/p/w185//pU3bnutJU91u3b4IeRPQTOP8jhV.jpg")!
             )
-        }.previewLayout(.fixed(width: 200, height: 150))
+        }.previewLayout(.fixed(width: 150, height: 200))
     }
 }

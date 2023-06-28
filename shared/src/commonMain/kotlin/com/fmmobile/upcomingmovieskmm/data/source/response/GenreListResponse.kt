@@ -1,14 +1,16 @@
 package com.fmmobile.upcomingmovieskmm.data.source.response
 
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreListModel
+import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreModel
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class GenreListResponse(
-    val genres: List<GenreResponse>
-)
+    override val genres: List<GenreResponse>
+): IGenreListModel
 
 @Serializable
 data class GenreResponse(
-    val id: Long,
-    val name: String
-)
+    override val id: Long,
+    override val name: String
+): IGenreModel

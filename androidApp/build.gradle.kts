@@ -4,6 +4,7 @@ val koin_version = "3.2.0"
 plugins {
     id("com.android.application")
     id("kotlin-parcelize")
+    kotlin("plugin.serialization") version "1.8.21"
     kotlin("android")
 }
 
@@ -54,4 +55,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-android:$koin_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }

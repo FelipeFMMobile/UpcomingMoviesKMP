@@ -35,12 +35,14 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
+import com.fmmobile.upcomingmovieskmm.android.NavActions
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
 import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
-import org.koin.java.KoinJavaComponent.get
-
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Composable
 fun MovieListMain(navController: NavHostController,
@@ -58,6 +60,7 @@ fun MovieListMain(navController: NavHostController,
         }
     }
     MovieListScreen(
+        useCase,
         navController,
         movies = movies,
         isLoading = isLoading
@@ -77,18 +80,11 @@ fun MovieListMain(navController: NavHostController,
 
 @Composable
 fun MovieListScreen(
+    useCase: GetMovieListUseCase = AndroidModule().getMovieListUseCase,
     navController: NavHostController,
     movies: List<Movie>,
     isLoading: MutableState<Boolean>,
     loadNextPage: suspend () -> Unit) {
-    fun getLimitedLinesText(text: String, maxLines: Int): String {
-        val lines = text.lines()
-        if (lines.size <= maxLines) {
-            return text
-        }
-        val limitedLines = lines.subList(0, maxLines)
-        return limitedLines.joinToString(separator = "\n")
-    }
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
@@ -99,16 +95,16 @@ fun MovieListScreen(
             Row(
                 modifier = Modifier.padding(16.dp)
                      .clickable {
-                        val info = MovieInfo(movie.title, movie.posterPath ?: "", movie.overview)
-                         navController.currentBackStackEntry
-                             ?.arguments?.putParcelable("obj", info)
-                        navController.navigate("movieDetail/${info.toUriString()}")
+                         movie.let {
+                             useCase.selectMovie(it)
+                             navController.navigate(NavActions.MovieDetail.route)
+                         }
                     },
                 verticalAlignment = Alignment.Top
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(Api.imageDomain.domain.plus(movie.posterPath))
+                        .data(movie.posterPath)
                         .build(),
                     contentDescription = movie.title,
                     contentScale = ContentScale.FillHeight,
