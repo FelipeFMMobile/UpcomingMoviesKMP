@@ -25,17 +25,23 @@ struct DetailSwiftUIView: View {
              .padding(16.0)
             Text(movie.overview)
              .padding(16.0)
-            Button(viewModel.buttonTitle) {
+            Button {
                 if viewModel.isSaved {
                     viewModel.removeItem(movie)
+                    
                 } else {
                     viewModel.saveItem(movie)
                 }
-                viewModel.buttonTitle(movie)
+            } label: {
+                Text(viewModel.buttonTitle)
+                    .padding(8)
             }.foregroundColor(viewModel.isSaved ? .cyan : .gray)
+                .buttonStyle(.bordered)
             Spacer()
         }.onAppear {
-            viewModel.buttonTitle(movie)
+            Task {
+                try? await viewModel.buttonTitle(movie)
+            }
         }
     }
 }

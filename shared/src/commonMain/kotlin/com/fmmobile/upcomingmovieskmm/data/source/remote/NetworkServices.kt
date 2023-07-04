@@ -26,16 +26,6 @@ class NetworkServices {
             })
         }
         this.expectSuccess = true
-//        HttpResponseValidator {
-//            validateResponse { response ->
-//                val error: Error = response.body()
-//                throw ServerResponseException(response, "")
-////                if (error.code != 0) {
-////                    throw CustomResponseException(response,
-////                        "Code: ${error.code}, message: ${error.message}")
-////                }
-//            }
-//        }
     }
 
     public fun make(endpoint: EndPoint, params: Map<String, String>? = null) : Url {

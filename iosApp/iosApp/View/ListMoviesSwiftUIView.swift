@@ -49,7 +49,6 @@ extension ListMoviesSwiftUIView {
     }
 
     private func loadMovies() async throws {
-        viewModel.forwardPage()
         try await viewModel.moviesList()
     }
 

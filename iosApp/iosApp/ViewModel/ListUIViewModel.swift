@@ -13,7 +13,8 @@ import shared
 class ListUIViewModel: ObservableObject {
     @Published var movies: [Movie] = [Movie]()
     @Published var title: String = "Upcoming Movies"
-
+    let favoriteTitle = "Favorite this item"
+    let myFavorite = "My Favorite"
     private var maxPages: Int64 = 1
     private(set) var currentPage: Int = 1
     
@@ -61,16 +62,19 @@ class ListUIViewModel: ObservableObject {
         self.currentPage = 1
     }
 
-    func buttonTitle(_ movie: Movie) {
-        let favoriteTitle = "Favorite this item"
-        DispatchQueue.main.async {
+    @available(iOS 15.0.0, *)
+    @MainActor
+    func buttonTitle(_ movie: Movie) async throws -> Bool {
+        typealias Continuation = CheckedContinuation<Bool, Error>
+        return try await withCheckedThrowingContinuation { (continuation: Continuation) in
             self.useCase.isSaved(movie: movie) { result, error in
                 if let error = error {
                     debugPrint("ERROR: \(error.localizedDescription)")
-                    return
+                    continuation.resume(returning: false)
                 }
-                self.buttonTitle = (result == true) ? "My Favorite" : favoriteTitle
+                self.buttonTitle = (result == true) ? self.myFavorite : self.favoriteTitle
                 self.isSaved = result?.boolValue ?? false
+                continuation.resume(returning: self.isSaved)
             }
         }
     }
@@ -78,8 +82,11 @@ class ListUIViewModel: ObservableObject {
     func saveItem(_ movie: Movie) {
         self.useCase.saveMovie(movie: movie, completionHandler: { error in
             debugPrint("error \(error?.localizedDescription ?? "")")
-            DispatchQueue.main.async {
-                if error == nil { self.isSaved = true }
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.isSaved = true
+                    self.buttonTitle = self.myFavorite
+                }
             }
         })
     }
@@ -87,8 +94,11 @@ class ListUIViewModel: ObservableObject {
     func removeItem(_ movie: Movie) {
         self.useCase.removeMovie(movie: movie, completionHandler: { error in
             debugPrint("error \(error?.localizedDescription ?? "")")
-            DispatchQueue.main.async {
-                if error == nil { self.isSaved = false }
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.isSaved = false
+                    self.buttonTitle = self.favoriteTitle
+                }
             }
         })
     }
