@@ -1,17 +1,13 @@
-package com.fmmobile.upcomingmovieskmm.data.implementation
+package com.fmmobile.upcomingmovieskmm.data.datasource.source.local
 
 import com.fmmobile.upcomingmovieskmm.data.datasource.MovieDataSource
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.local.dataModels.MovieListDAO
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.local.dataModels.MovieRO
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreListModel
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IMovieModel
-import com.fmmobile.upcomingmovieskmm.data.implementation.dataModels.MovieListDAO
-import com.fmmobile.upcomingmovieskmm.data.implementation.dataModels.MovieRO
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.notifications.InitialResults
-import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.RealmResults
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class MovieRealmDataSource: MovieDataSource {
 

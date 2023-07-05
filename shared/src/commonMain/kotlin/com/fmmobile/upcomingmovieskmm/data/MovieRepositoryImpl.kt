@@ -1,13 +1,14 @@
-package com.fmmobile.upcomingmovieskmm.domain.implementation
+package com.fmmobile.upcomingmovieskmm.data
 
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IMovieModel
-import com.fmmobile.upcomingmovieskmm.data.implementation.MovieRealmDataSource
-import com.fmmobile.upcomingmovieskmm.data.implementation.MovieRemoteDataSource
-import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.local.MovieRealmDataSource
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.MovieRemoteDataSource
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.Api
 import com.fmmobile.upcomingmovieskmm.domain.model.Dates
 import com.fmmobile.upcomingmovieskmm.domain.repository.MovieRepository
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
 import com.fmmobile.upcomingmovieskmm.domain.model.MovieList
+import io.github.aakira.napier.Napier
 
 class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource,
@@ -28,6 +29,7 @@ class MovieRepositoryImpl(
                 )
             },
             onFailure = {
+                Napier.e("movie load failure", it)
             }
         )
         return movieList
@@ -48,6 +50,7 @@ class MovieRepositoryImpl(
                 )
             },
             onFailure = {
+                Napier.e("movie local load failure", it)
             }
         )
         return movieList
@@ -55,7 +58,7 @@ class MovieRepositoryImpl(
 
     override suspend fun saveMovie(movie: Movie) {
         // check if is already saved
-        val movie = realmDataSource.getMovie(movie.id) ?:
+        realmDataSource.getMovie(movie.id) ?:
         realmDataSource.saveMovie(movie)
     }
 
@@ -81,7 +84,7 @@ class MovieWrapper() {
                     it.originalTitle,
                     it.overview,
                     it.popularity,
-                    Api.imageDomain.domain + it.posterPath,
+                    Api.ImageDomain.domain + it.posterPath,
                     it.releaseDate,
                     it.title,
                     it.video,

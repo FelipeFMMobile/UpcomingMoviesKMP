@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
-import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.Api
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import kotlinx.coroutines.launch

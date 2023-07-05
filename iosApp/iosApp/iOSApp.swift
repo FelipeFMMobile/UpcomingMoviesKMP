@@ -6,6 +6,7 @@ struct iOSApp: App {
     // KMM - Koin Call
     init() {
         HelperKt.doInitKoin()
+        HelperKt.debugMode()
     }
 
 	var body: some Scene {

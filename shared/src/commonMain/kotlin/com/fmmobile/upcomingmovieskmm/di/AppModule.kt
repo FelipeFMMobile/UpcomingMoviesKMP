@@ -1,10 +1,10 @@
 package com.fmmobile.upcomingmovieskmm.di
 
-import com.fmmobile.upcomingmovieskmm.domain.implementation.GenreRepositoryImpl
-import com.fmmobile.upcomingmovieskmm.domain.implementation.MovieRepositoryImpl
-import com.fmmobile.upcomingmovieskmm.data.implementation.MovieRemoteDataSource
-import com.fmmobile.upcomingmovieskmm.data.implementation.MovieRealmDataSource
-import com.fmmobile.upcomingmovieskmm.data.source.remote.NetworkServices
+import com.fmmobile.upcomingmovieskmm.data.GenreRepositoryImpl
+import com.fmmobile.upcomingmovieskmm.data.MovieRepositoryImpl
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.MovieRemoteDataSource
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.local.MovieRealmDataSource
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.NetworkServices
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

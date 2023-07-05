@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
 import com.fmmobile.upcomingmovieskmm.appModule
+import com.fmmobile.upcomingmovieskmm.debugBuild
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
             androidContext(this@MainActivity)
             androidLogger()
             modules(appModule() + AndroidModule().module)
+            debugBuild()
         }
         setContent {
             val navController = rememberNavController()

@@ -1,4 +1,4 @@
-package com.fmmobile.upcomingmovieskmm.data.implementation.dataModels
+package com.fmmobile.upcomingmovieskmm.data.datasource.source.local.dataModels
 
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IDatesModel
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IMovieListModel

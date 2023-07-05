@@ -1,4 +1,4 @@
-package com.fmmobile.upcomingmovieskmm.data.source.response
+package com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.response
 
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreListModel
 import com.fmmobile.upcomingmovieskmm.data.datasource.models.IGenreModel

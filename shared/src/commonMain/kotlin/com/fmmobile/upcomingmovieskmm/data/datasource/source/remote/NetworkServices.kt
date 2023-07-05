@@ -1,4 +1,4 @@
-package com.fmmobile.upcomingmovieskmm.data.source.remote
+package com.fmmobile.upcomingmovieskmm.data.datasource.source.remote
 
 import io.ktor.client.*
 import io.ktor.client.call.body
@@ -31,7 +31,7 @@ class NetworkServices {
     public fun make(endpoint: EndPoint, params: Map<String, String>? = null) : Url {
         val builder = URLBuilder().apply {
             protocol = URLProtocol.HTTPS
-            host = Api.prod.domain
+            host = Api.Prod.domain
             encodedPath = endpoint.path
             parameters.apply {
                 append("api_key", "2c767653e58ac61f2ef293863e254f5d")

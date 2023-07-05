@@ -37,7 +37,7 @@ import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
 import com.fmmobile.upcomingmovieskmm.android.NavActions
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
-import com.fmmobile.upcomingmovieskmm.data.source.remote.Api
+import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.Api
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
 import kotlinx.serialization.Serializable

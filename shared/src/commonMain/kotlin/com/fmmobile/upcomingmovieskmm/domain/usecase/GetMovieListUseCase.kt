@@ -1,12 +1,11 @@
 package com.fmmobile.upcomingmovieskmm.domain.usecase
 
-import com.fmmobile.upcomingmovieskmm.data.source.remote.NetworkServices
+
 import com.fmmobile.upcomingmovieskmm.domain.model.GenreList
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
 import com.fmmobile.upcomingmovieskmm.domain.model.MovieList
 import com.fmmobile.upcomingmovieskmm.domain.repository.GenreRepository
 import com.fmmobile.upcomingmovieskmm.domain.repository.MovieRepository
-import io.ktor.serialization.JsonConvertException
 
 class GetMovieListUseCase(
     private val genreRepository: GenreRepository,

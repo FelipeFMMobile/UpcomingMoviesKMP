@@ -1,7 +1,7 @@
 package com.fmmobile.upcomingmovieskmm.android.di
 
-import com.fmmobile.upcomingmovieskmm.domain.implementation.GenreRepositoryImpl
-import com.fmmobile.upcomingmovieskmm.domain.implementation.MovieRepositoryImpl
+import com.fmmobile.upcomingmovieskmm.data.GenreRepositoryImpl
+import com.fmmobile.upcomingmovieskmm.data.MovieRepositoryImpl
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.dsl.module
