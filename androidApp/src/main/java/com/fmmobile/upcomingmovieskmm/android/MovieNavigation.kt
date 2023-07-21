@@ -5,24 +5,19 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.fmmobile.upcomingmovieskmm.android.composeui.MovieDetailScreen
-import com.fmmobile.upcomingmovieskmm.android.composeui.MovieInfo
 import com.fmmobile.upcomingmovieskmm.android.composeui.MovieListMain
-
 
 object NavGraph {
     const val MovieList = "movieList"
-    const val MovieDetail = "movieDetail/{info}"
+    const val MovieDetail = "movieDetail"
 }
 
 sealed class NavActions(val route: String) {
     object MovieList : NavActions(NavGraph.MovieList)
-    //data class MovieDetail(val info: MovieInfo) : NavActions(NavGraph.MovieDetail)
+    object MovieDetail : NavActions(NavGraph.MovieDetail)
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -39,17 +34,9 @@ fun MovieNavigation(modifier: Modifier = Modifier,
             MovieListMain(navController)
         }
         composable(
-            route = NavGraph.MovieDetail,
-            arguments = listOf(navArgument("info") { type =
-                NavType.StringType
-            })
+            route = NavGraph.MovieDetail
         ) {
-            val info = it.arguments?.getString("info")
-
-            info?.let {
-                val movie = MovieInfo.fromUriString(info)
-                MovieDetailScreen(info = movie)
-            }
+            MovieDetailScreen()
         }
     }
 }

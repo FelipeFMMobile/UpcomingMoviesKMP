@@ -1,6 +1,5 @@
 package com.fmmobile.upcomingmovieskmm.android.composeui
 
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,11 +20,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -39,27 +36,29 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
 import com.fmmobile.upcomingmovieskmm.android.NavActions
-import com.fmmobile.upcomingmovieskmm.android.NavGraph
-import com.fmmobile.upcomingmovieskmm.network.Api
-import com.fmmobile.upcomingmovieskmm.network.GetMovieListUseCase
-import com.fmmobile.upcomingmovieskmm.network.model.Movie
-
+import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
+import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
+import com.fmmobile.upcomingmovieskmm.domain.model.Movie
+import org.koin.core.context.startKoin
 
 @Composable
-fun MovieListMain(navController: NavHostController) {
+fun MovieListMain(navController: NavHostController,
+                  useCase: GetMovieListUseCase =
+                      AndroidModule().getMovieListUseCase
+    ) {
     var pageCount = 1
-    var movies = remember { mutableStateListOf<Movie>() }
-    var isLoading = remember { mutableStateOf(false)}
+    val movies = remember { mutableStateListOf<Movie>() }
+    val isLoading = remember { mutableStateOf(false)}
     LaunchedEffect(true) {
         try {
             movies.addAll(
-                GetMovieListUseCase()
-                .loadMovies(pageCount).results)
+                useCase.loadMovies(pageCount).results)
         } catch (e: Exception) {
             e.localizedMessage ?: "error"
         }
     }
     MovieListScreen(
+        useCase,
         navController,
         movies = movies,
         isLoading = isLoading
@@ -68,8 +67,7 @@ fun MovieListMain(navController: NavHostController) {
         isLoading.value = true
         try {
             movies.addAll(
-                GetMovieListUseCase()
-                    .loadMovies(pageCount).results
+                useCase.loadMovies(pageCount).results
             )
             isLoading.value = false
         } catch (e: Exception) {
@@ -80,18 +78,11 @@ fun MovieListMain(navController: NavHostController) {
 
 @Composable
 fun MovieListScreen(
+    useCase: GetMovieListUseCase = AndroidModule().getMovieListUseCase,
     navController: NavHostController,
     movies: List<Movie>,
     isLoading: MutableState<Boolean>,
     loadNextPage: suspend () -> Unit) {
-    fun getLimitedLinesText(text: String, maxLines: Int): String {
-        val lines = text.lines()
-        if (lines.size <= maxLines) {
-            return text
-        }
-        val limitedLines = lines.subList(0, maxLines)
-        return limitedLines.joinToString(separator = "\n")
-    }
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
@@ -100,18 +91,19 @@ fun MovieListScreen(
     ) {
         items(movies) { movie ->
             Row(
-                modifier = Modifier.padding(16.dp)
-                     .clickable {
-                        val info = MovieInfo(movie.title, movie.posterPath, movie.overview)
-                         navController.currentBackStackEntry
-                             ?.arguments?.putParcelable("obj", info)
-                        navController.navigate("movieDetail/${info.toUriString()}")
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable {
+                        movie.let {
+                            useCase.selectMovie(it)
+                            navController.navigate(NavActions.MovieDetail.route)
+                        }
                     },
                 verticalAlignment = Alignment.Top
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(Api.imageDomain.domain.plus(movie.posterPath))
+                        .data(movie.posterPath)
                         .build(),
                     contentDescription = movie.title,
                     contentScale = ContentScale.FillHeight,
@@ -148,32 +140,5 @@ fun MovieListScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        val movies = listOf(
-            Movie(
-                title = "Movie 1",
-                posterPath = "https://www.example.com/movie1_poster.jpg",
-                overview = "This is the overview of Movie 1",
-                releaseDate = "2022-01-01",
-                adult = false,
-                video = false,
-                voteAverage = 100.0,
-                voteCount = 0,
-                backdropPath = null,
-                genreIDS = emptyList(),
-                originalLanguage = "",
-                originalTitle = "",
-                popularity = 0.0,
-                id = 100
-            ),
-        )
-        var loading = remember { mutableStateOf(false) }
-        MovieListMain(rememberNavController())
     }
 }

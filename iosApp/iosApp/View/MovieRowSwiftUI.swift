@@ -9,13 +9,14 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct MovieRowUI: View {
+struct MovieRowSwiftUI: View {
     @StateObject var rowModel: MovieRowUIViewModel
     var body: some View {
         HStack(alignment: .top,
                spacing: 12.0) {
             ImageLoaderView(url: rowModel.posterPath)
-                .frame(height: 150)
+                    .frame(width: 100,
+                           height: 150)
             VStack(alignment: .leading, spacing: 4.0) {
                 HStack(alignment: .top) {
                     Text(rowModel.title)
@@ -36,15 +37,5 @@ struct MovieRowUI: View {
                 }
             }
         }.padding(8)
-    }
-}
-
-@available(iOS 14.0, *)
-struct MovieRowUI_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-//            MovieRowUI(rowModel: PreviewEnviroment.cellModel).environmentObject(EnviromentData())
-//            MovieRowUI(rowModel: PreviewEnviroment.cellModel2).environmentObject(EnviromentData())
-        }.previewLayout(.fixed(width: 345, height: 200))
     }
 }

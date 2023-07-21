@@ -1,9 +1,13 @@
 val ktorVersion = "2.2.4"
+val realmVersion = "1.8.0"
+val napierVersion = "2.6.1"
+val koinVersion = "3.2.0"
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.8.21"
+    id("io.realm.kotlin") version "1.9.0"
 }
 
 kotlin {
@@ -24,6 +28,13 @@ kotlin {
             baseName = "shared"
         }
     }
+    allprojects {
+        repositories {
+            google()
+            mavenCentral()
+            mavenLocal()
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -33,7 +44,9 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-
+                implementation("io.realm.kotlin:library-base:$realmVersion") // Local database
+                implementation("io.github.aakira:napier:$napierVersion")
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {

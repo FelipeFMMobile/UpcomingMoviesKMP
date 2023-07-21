@@ -20,7 +20,7 @@ class MovieRowUIViewModel: ObservableObject {
 
     required init(movie: Movie) {
         title = movie.title
-        let url = Api.imagedomain.domain + movie.posterPath
+        let url = movie.posterPath ?? ""
         if let url = URL(string: url) {
             posterPath = url
         }
