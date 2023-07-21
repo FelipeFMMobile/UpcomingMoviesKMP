@@ -26,7 +26,7 @@ Kotlin Multiplatform is a technology that allows developers to share code betwee
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.10-blue.svg)](https://kotlinlang.org/docs/releases.html#release-details)
 [![Swift Version](https://img.shields.io/badge/Swift-5.5-orange.svg)](https://swift.org/blog/swift-5-5-released/)
 [![Android Studio Version](https://img.shields.io/badge/Android%20Studio-4.2-green.svg)](https://developer.android.com/studio)
-[![Xcode Version](https://img.shields.io/badge/Xcode-13.0-blue.svg)](https://developer.apple.com/xcode/)
+[![Xcode Version](https://img.shields.io/badge/Xcode-14.3-blue.svg)](https://developer.apple.com/xcode/)
 
 ## How to Use
 
