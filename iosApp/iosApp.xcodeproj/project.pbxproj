@@ -84,8 +84,8 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				BC93216B2A4CE46200FD7733 /* View */,
 				BC93216A2A4CE45500FD7733 /* ViewModel */,
+				BC93216B2A4CE46200FD7733 /* View */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,

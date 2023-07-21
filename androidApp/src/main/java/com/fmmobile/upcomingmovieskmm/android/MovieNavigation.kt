@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import com.fmmobile.upcomingmovieskmm.android.composeui.MovieDetailScreen
 import com.fmmobile.upcomingmovieskmm.android.composeui.MovieListMain
 
-
 object NavGraph {
     const val MovieList = "movieList"
     const val MovieDetail = "movieDetail"

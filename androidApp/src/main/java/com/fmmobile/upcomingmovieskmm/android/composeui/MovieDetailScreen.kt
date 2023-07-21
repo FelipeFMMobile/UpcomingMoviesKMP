@@ -36,9 +36,9 @@ fun MovieDetailScreen(useCase: GetMovieListUseCase = AndroidModule().getMovieLis
         }
     }
     val buttonColors = if (isSavedState.value) {
-        ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+        ButtonDefaults.buttonColors(backgroundColor = Color.Blue)
     } else {
-        ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+        ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
     }
     Column(
         modifier = Modifier.padding(16.dp),

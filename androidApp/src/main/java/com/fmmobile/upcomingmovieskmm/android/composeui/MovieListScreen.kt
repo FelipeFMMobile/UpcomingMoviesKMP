@@ -37,20 +37,18 @@ import coil.request.ImageRequest
 import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
 import com.fmmobile.upcomingmovieskmm.android.NavActions
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
-import com.fmmobile.upcomingmovieskmm.data.datasource.source.remote.Api
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import org.koin.core.context.startKoin
 
 @Composable
 fun MovieListMain(navController: NavHostController,
-                  useCase: GetMovieListUseCase = AndroidModule().getMovieListUseCase
+                  useCase: GetMovieListUseCase =
+                      AndroidModule().getMovieListUseCase
     ) {
     var pageCount = 1
-    var movies = remember { mutableStateListOf<Movie>() }
-    var isLoading = remember { mutableStateOf(false)}
+    val movies = remember { mutableStateListOf<Movie>() }
+    val isLoading = remember { mutableStateOf(false)}
     LaunchedEffect(true) {
         try {
             movies.addAll(
@@ -93,12 +91,13 @@ fun MovieListScreen(
     ) {
         items(movies) { movie ->
             Row(
-                modifier = Modifier.padding(16.dp)
-                     .clickable {
-                         movie.let {
-                             useCase.selectMovie(it)
-                             navController.navigate(NavActions.MovieDetail.route)
-                         }
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable {
+                        movie.let {
+                            useCase.selectMovie(it)
+                            navController.navigate(NavActions.MovieDetail.route)
+                        }
                     },
                 verticalAlignment = Alignment.Top
             ) {
@@ -141,32 +140,5 @@ fun MovieListScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        val movies = listOf(
-            Movie(
-                title = "Movie 1",
-                posterPath = "https://www.example.com/movie1_poster.jpg",
-                overview = "This is the overview of Movie 1",
-                releaseDate = "2022-01-01",
-                adult = false,
-                video = false,
-                voteAverage = 100.0,
-                voteCount = 0,
-                backdropPath = null,
-                genreIDS = emptyList(),
-                originalLanguage = "",
-                originalTitle = "",
-                popularity = 0.0,
-                id = 100
-            ),
-        )
-        var loading = remember { mutableStateOf(false) }
-        MovieListMain(rememberNavController())
     }
 }

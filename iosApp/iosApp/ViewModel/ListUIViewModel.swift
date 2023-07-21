@@ -29,13 +29,11 @@ class ListUIViewModel: ObservableObject {
     @Published
     var buttonTitle = ""
 
-    @available(iOS 15.0.0, *)
     @MainActor
     func moviesList() async throws {
         movies += try await listMovies()
     }
 
-    @available(iOS 15.0.0, *)
     private func listMovies() async throws -> [Movie] {
         typealias ApiContinuation = CheckedContinuation<[Movie], Error>
         return try await withCheckedThrowingContinuation { (continuation: ApiContinuation) in
@@ -62,7 +60,6 @@ class ListUIViewModel: ObservableObject {
         self.currentPage = 1
     }
 
-    @available(iOS 15.0.0, *)
     @MainActor
     func buttonTitle(_ movie: Movie) async throws -> Bool {
         typealias Continuation = CheckedContinuation<Bool, Error>
@@ -79,6 +76,7 @@ class ListUIViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func saveItem(_ movie: Movie) {
         self.useCase.saveMovie(movie: movie, completionHandler: { error in
             debugPrint("error \(error?.localizedDescription ?? "")")

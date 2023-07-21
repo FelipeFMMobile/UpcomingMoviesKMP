@@ -22,9 +22,7 @@ struct ImageLoaderView: View {
 struct ImageLoaderView_Previews: PreviewProvider {
     static var previews: some SwiftUI.View {
         Group {
-            ImageLoaderView(url:
-                                URL(string: "https://image.tmdb.org/t/p/w185//pU3bnutJU91u3b4IeRPQTOP8jhV.jpg")!
-            )
+            ImageLoaderView(url: URL(string: "https://image.tmdb.org/t/p/w185//pU3bnutJU91u3b4IeRPQTOP8jhV.jpg")!)
         }.previewLayout(.fixed(width: 150, height: 200))
     }
 }

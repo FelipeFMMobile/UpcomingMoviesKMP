@@ -22,10 +22,10 @@ struct ListMoviesSwiftUIView: View {
                 } label: {
                     let rowModel = MovieRowUIViewModel(movie: movie)
                     MovieRowSwiftUI(rowModel: rowModel)
-                } .onAppear {
+                } .task {
                     isLast = viewModel.movies.last == movie
                     if isLast {
-                        Task { try? await loadMore() }
+                        try? await loadMore()
                     }
                 }
             }.listStyle(.plain)
@@ -33,16 +33,15 @@ struct ListMoviesSwiftUIView: View {
                 ProgressView()
             }
         }.navigationTitle(viewModel.title)
-            .onAppear {
-                Task { try? await loadMovies() }
-            }
-            .refreshable {
-                try? await refresh()
-            }
+        .task {
+            try? await loadMovies()
+        }
+        .refreshable {
+            try? await refresh()
+        }
     }
 }
 
-@available(iOS 15.0, *)
 extension ListMoviesSwiftUIView {
     func titleForView() -> String? {
         return viewModel.title
@@ -63,7 +62,7 @@ extension ListMoviesSwiftUIView {
          try await loadMovies()
     }
 }
-@available(iOS 15.0, *)
+
 struct ListMoviesUIView_Previews: PreviewProvider {
     static var previews: some View {
         ListMoviesSwiftUIView(viewModel: ListUIViewModel())

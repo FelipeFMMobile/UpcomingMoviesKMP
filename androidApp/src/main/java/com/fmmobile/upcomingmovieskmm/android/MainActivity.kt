@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
 import com.fmmobile.upcomingmovieskmm.appModule
@@ -34,8 +33,7 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Text(text = "Upcoming Movies KMM")
-                            },
-                            navigationIcon = {
+                            }, navigationIcon = {
                                 IconButton(onClick = { navController.navigateUp() }) {
                                     Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                                 }
@@ -48,9 +46,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
 }
