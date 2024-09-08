@@ -5,6 +5,8 @@ import com.fmmobile.upcomingmovieskmm.domain.model.GenreList
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
 import com.fmmobile.upcomingmovieskmm.domain.model.MovieList
 import com.fmmobile.upcomingmovieskmm.domain.repository.GenreRepository
+import com.fmmobile.upcomingmovieskmm.domain.repository.LocationInfo
+import com.fmmobile.upcomingmovieskmm.domain.repository.LocationRepository
 import com.fmmobile.upcomingmovieskmm.domain.repository.MovieRepository
 
 class GetMovieListUseCase(
@@ -41,6 +43,10 @@ class GetMovieListUseCase(
 
     fun selectMovie(movie: Movie) {
         selectedMovie = movie
+    }
+
+    suspend fun getLocation(): LocationInfo {
+        return LocationRepository.make()
     }
 
 }

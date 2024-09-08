@@ -1,5 +1,6 @@
 package com.fmmobile.upcomingmovieskmm.android.composeui
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,18 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.fmmobile.upcomingmovieskmm.android.MyApplicationTheme
 import com.fmmobile.upcomingmovieskmm.android.NavActions
 import com.fmmobile.upcomingmovieskmm.android.di.AndroidModule
 import com.fmmobile.upcomingmovieskmm.domain.usecase.GetMovieListUseCase
 import com.fmmobile.upcomingmovieskmm.domain.model.Movie
-import org.koin.core.context.startKoin
 
 @Composable
 fun MovieListMain(navController: NavHostController,
@@ -52,7 +49,10 @@ fun MovieListMain(navController: NavHostController,
     LaunchedEffect(true) {
         try {
             movies.addAll(
-                useCase.loadMovies(pageCount).results)
+                useCase.loadMovies(pageCount).results
+            )
+            val info = useCase.getLocation()
+            Log.i("Location","Last user location$info")
         } catch (e: Exception) {
             e.localizedMessage ?: "error"
         }

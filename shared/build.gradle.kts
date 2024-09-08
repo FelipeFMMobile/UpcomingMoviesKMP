@@ -2,6 +2,7 @@ val ktorVersion = "2.2.4"
 val realmVersion = "1.8.0"
 val napierVersion = "2.6.1"
 val koinVersion = "3.2.0"
+val playServices = "21.3.0"
 
 plugins {
     kotlin("multiplatform")
@@ -47,6 +48,8 @@ kotlin {
                 implementation("io.realm.kotlin:library-base:$realmVersion") // Local database
                 implementation("io.github.aakira:napier:$napierVersion")
                 implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation("com.google.android.gms:play-services-location:$playServices")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
             }
         }
         val commonTest by getting {
@@ -90,4 +93,7 @@ android {
     defaultConfig {
         minSdk = 25
     }
+}
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }
