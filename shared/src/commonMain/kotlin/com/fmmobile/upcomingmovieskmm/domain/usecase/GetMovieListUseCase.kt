@@ -48,5 +48,4 @@ class GetMovieListUseCase(
     suspend fun getLocation(): LocationInfo {
         return LocationRepository.make()
     }
-
 }

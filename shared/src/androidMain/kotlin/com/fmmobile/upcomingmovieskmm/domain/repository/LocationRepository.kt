@@ -2,8 +2,12 @@ package com.fmmobile.upcomingmovieskmm.domain.repository
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.Activity
 import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.fmmobile.upcomingmovieskmm.AppContext
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -14,9 +18,20 @@ private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 actual object LocationRepository {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
+
     @SuppressLint("MissingPermission")
     actual suspend fun make(): LocationInfo {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(AppContext.get())
+        if (!isLocationPermissionGranted()) {
+            AppContext.getActivity()?.let {
+                ActivityCompat.requestPermissions(
+                    it,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+        fusedLocationClient = LocationServices
+            .getFusedLocationProviderClient(AppContext.get())
         return try {
             val result = fusedLocationClient.lastLocation.await()
             return LocationInfo(result.latitude, result.longitude)
@@ -33,4 +48,6 @@ actual object LocationRepository {
         ) == PackageManager.PERMISSION_GRANTED
     }
 }
+
+
 

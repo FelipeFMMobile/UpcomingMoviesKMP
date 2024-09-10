@@ -28,10 +28,6 @@ class MainActivity : ComponentActivity() {
             androidLogger()
             modules(appModule() + AndroidModule().module)
             debugBuild()
-            if (!LocationRepository.isLocationPermissionGranted()) {
-                val intent = Intent(AppContext.get(), LocationActivity::class.java)
-                startActivity(intent)
-            }
         }
         setContent {
             val navController = rememberNavController()
