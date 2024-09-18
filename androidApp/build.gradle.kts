@@ -9,10 +9,10 @@ plugins {
 }
 
 android {
-    namespace = "com.fmmobile.upcomingmovieskmm.android"
+    namespace = "com.fmmobile.upcomingmovieskmp.android"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.fmmobile.upcomingmovieskmm.android"
+        applicationId = "com.fmmobile.upcomingmovieskmp.android"
         minSdk = 33
         targetSdk = 33
         versionCode = 1

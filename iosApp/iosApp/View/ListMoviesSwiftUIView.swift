@@ -7,12 +7,13 @@
 //
 
 import SwiftUI
-import shared
+import Shared
 
 @available(iOS 15.0, *)
 struct ListMoviesSwiftUIView: View {
     @StateObject var viewModel = ListUIViewModel()
     @State private var isLast = false
+    @State var showAlert = false
     var body: some View {
         VStack {
             List(viewModel.movies, id: \.id) { movie in
@@ -33,6 +34,24 @@ struct ListMoviesSwiftUIView: View {
                 ProgressView()
             }
         }.navigationTitle(viewModel.title)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    viewModel.getLocation()
+                    let cancellable = viewModel.$info.sink { info in
+                        showAlert = true
+                    }
+                }) {
+                    Image(systemName: "location.fill")
+                }.alert(isPresented: $showAlert) {
+                    Alert(title: Text("User location"),
+                          message: Text("Near of \(viewModel.info)"),
+                          dismissButton: .default(Text("Ok"), action: {
+                        showAlert = false
+                    }))
+                }
+            }
+        }
         .task {
             try? await loadMovies()
         }

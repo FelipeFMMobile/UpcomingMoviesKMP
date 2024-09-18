@@ -8,11 +8,13 @@
 
 import Combine
 import SwiftUI
-import shared
+import Shared
 
 class ListUIViewModel: ObservableObject {
     @Published var movies: [Movie] = [Movie]()
     @Published var title: String = "Upcoming Movies"
+    @Published var info: LocationInfo = LocationInfo(lat: 0.0, long: 0.0)
+    
     let favoriteTitle = "Favorite this item"
     let myFavorite = "My Favorite"
     private var maxPages: Int64 = 1
@@ -100,4 +102,21 @@ class ListUIViewModel: ObservableObject {
             }
         })
     }
+
+    func getLocation() {
+        self.useCase.getLocation(callback: self)
+    }
+    
+}
+
+extension ListUIViewModel: LocationCallback {
+    func onLocationError(error: KotlinThrowable) {
+        debugPrint("error \(error.description())")
+    }
+    
+    func onLocationReceived(locationInfo: LocationInfo) {
+        info = locationInfo
+    }
+    
+    
 }

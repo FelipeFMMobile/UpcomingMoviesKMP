@@ -7,7 +7,7 @@
 //
 
 import Combine
-import shared
+import Shared
 
 class MovieRowUIViewModel: ObservableObject {
     var title: String = ""

@@ -1,8 +1,11 @@
+
+
 val ktorVersion = "2.2.4"
 val realmVersion = "1.8.0"
 val napierVersion = "2.6.1"
 val koinVersion = "3.2.0"
 val playServices = "21.3.0"
+val courotinesPlayServices = "1.7.1"
 
 plugins {
     kotlin("multiplatform")
@@ -19,14 +22,15 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            isStatic = true
         }
     }
     allprojects {
@@ -48,8 +52,6 @@ kotlin {
                 implementation("io.realm.kotlin:library-base:$realmVersion") // Local database
                 implementation("io.github.aakira:napier:$napierVersion")
                 implementation("io.insert-koin:koin-core:$koinVersion")
-                implementation("com.google.android.gms:play-services-location:$playServices")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
             }
         }
         val commonTest by getting {
@@ -60,8 +62,11 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("com.google.android.gms:play-services-location:$playServices")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$courotinesPlayServices")
             }
         }
+
         val androidUnitTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -75,20 +80,20 @@ kotlin {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
-        }
+//        val iosX64Test by getting
+//        val iosArm64Test by getting
+//        val iosSimulatorArm64Test by getting
+//        val iosTest by creating {
+//            dependsOn(commonTest)
+//            iosX64Test.dependsOn(this)
+//            iosArm64Test.dependsOn(this)
+//            iosSimulatorArm64Test.dependsOn(this)
+//        }
     }
 }
 
 android {
-    namespace = "com.fmmobile.upcomingmovieskmm"
+    namespace = "com.fmmobile.upcomingmovieskmp"
     compileSdk = 33
     defaultConfig {
         minSdk = 25

@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "UpcomingMoviesKMM"
+rootProject.name = "UpcomingMoviesKMP"
 include(":androidApp")
 include(":shared")

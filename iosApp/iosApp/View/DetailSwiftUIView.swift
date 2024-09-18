@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import shared
+import Shared
 
 struct DetailSwiftUIView: View {
     @EnvironmentObject var viewModel: ListUIViewModel
