@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import Shared
 
 @main
 struct iOSApp: App {
@@ -8,8 +8,12 @@ struct iOSApp: App {
         HelperKt.doInitKoin()
         HelperKt.debugMode()
     }
-
-	var body: some Scene {
+    private let injection = InjectionHelper()
+    private var useCase: GetMovieListUseCase {
+        GetMovieListUseCase(genreRepository: InjectionHelper().genreRepository,
+                            movieRepository: InjectionHelper().movieRepository)
+    }
+    var body: some Scene {
 		WindowGroup {
             if #available(iOS 16.0, *) {
                 NavigationStack {
@@ -18,6 +22,7 @@ struct iOSApp: App {
             } else {
                 ListMoviesSwiftUIView()
             }
+            
 		}
 	}
 }
